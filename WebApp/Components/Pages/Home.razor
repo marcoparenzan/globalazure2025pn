@@ -1,0 +1,234 @@
+﻿@page "/"
+@using WebApp.Models
+
+<nav class="side-menu">
+    <ul>
+        <li class="hidden active">
+            <a class="page-scroll" href="#page-top"></a>
+        </li>
+        <li>
+            <a href="#home" class="page-scroll">
+                <span class="menu-title">Home</span>
+                <span class="dot"></span>
+            </a>
+        </li>
+        <li>
+            <a href="#tickets" class="page-scroll">
+                <span class="menu-title">Registrati</span>
+                <span class="dot"></span>
+            </a>
+        </li>
+        <li>
+            <a href="#schedule" class="page-scroll">
+                <span class="menu-title">Agenda</span>
+                <span class="dot"></span>
+            </a>
+        </li>
+        <li>
+            <a href="#speakers" class="page-scroll">
+                <span class="menu-title">Speakers</span>
+                <span class="dot"></span>
+            </a>
+        </li>
+
+    </ul>
+</nav>
+<div class="container-fluid">
+    <!-- Start: Header -->
+    <div class="row hero-header" id="home">
+        <div class="col-md-7">
+            <img src="img/1nn0va.png" class="logo">
+            <h1>Global Azure 2025, la tappa di Pordenone</h1>
+            <h3>Consorzio Universitario di Pordenone, via Prasecco 3/A, ore 9.00</h3>
+            <h4>12 aprile 2025</h4>
+            <a href="#tickets" class="btn btn-lg btn-red">Registrati <span class="ti-arrow-right"></span></a>
+
+        </div>
+        <div class="col-md-5 hidden-xs">
+            <img src="img/banner-eventbrite-1.png" class="rocket animated bounce">
+        </div>
+    </div>
+    <!-- End: Header -->
+</div>
+
+<section class="descripton">
+
+    <div class="container">
+        <!-- Start: Desc -->
+        <div class="row me-row content">
+            <div class="content-ct"><h2 class="row-title">L'evento</h2></div>
+            <div class="col-md-12">
+                <p>
+                    Torna al Consorzio Universitario di via Prasecco 3/A, per il 2025, l'evento che proprio qui, a Pordenone, nel 2014, è arrivato per la prima volta in Italia. Evento congiunto con CloudGen, gli amici di Verona che stanno supportando in questi anni il Global Azure nel Triveneto.
+                </p><p>
+
+                    Un evento in sicrono worldwide, di cui è un piacere fare parte.
+                </p><p>
+
+                    Azure cresce continuamente, anno dopo anno e quindi in questo evento lo stato dell'arte di Azure e dei suoi servizi.
+                </p><p>
+
+                    L'agenda è in preparazione: ma come sempre, sarà un evento con grandi contenuti e grandi speaker!
+                </p>
+            </div>
+        </div>
+        <!-- End: Desc -->
+    </div>
+</section>
+<section class="sponsor">
+
+    <div class="container">
+        <!-- Start: Desc -->
+        <div class="row me-row content-ct">
+            <h2 class="row-title">Sponsors</h2>
+            <div class="col-md-4 feature">
+                <h3><a href="https://www.altitudo.com/" target="_blank"><img src="img/altitudo.png" width="200"></a></h3>
+            </div>
+            <div class="col-md-4 feature">
+                <h3><a href="https://www.beantech.it/" target="_blank"><img src="img/beantech.png" width="200"></a></h3>
+            </div>
+            <div class="col-md-4 feature">
+                <h3><a href="https://www.overnet.education/" target="_blank"><img src="img/overneteducation.png" width="200"></a></h3>
+            </div>
+            <div class="col-md-4 feature">
+                <h3><a href="https://www.stesi.it/" target="_blank"><img src="img/stesi.png" width="200"></a></h3>
+            </div>
+            <div class="col-md-4 feature">
+                <h3><a href="https://it.tdsynnex.com/" target="_blank"><img src="img/tdsynnex.png" width="200"></a></h3>
+            </div>
+        </div>
+        <!-- End: Desc -->
+    </div>
+</section>
+
+<!-- Start: Tickets -->
+<div class="container-fluid tickets" id="tickets">
+    <div class="row me-row content-ct">
+        <h2 class="row-title">Registrati</h2>
+        <div class="col-md-2">
+        </div>
+        <div class="col-md-8">
+            <iframe src="https://www.eventbrite.it/checkout-external?eid=1196163209359&amp;parent=https%3A%2F%2Fwww.eventbrite.it%2Fmyevent%1173851875559%2Fembedded-checkout%2F" data-automation="checkout-widget-iframe-1173851875559" allowtransparency="true" frameborder="0" scrolling="auto" width="100%" height="500"></iframe>
+        </div>
+    </div>
+</div>
+<!-- End: Tickets -->
+<!-- Start: Schedule -->
+<section class="schedule">
+    <div class="container">
+        <div class="row me-row" id="schedule">
+            <h2 class="row-title content-ct">Agenda</h2>
+            <div class="col-md-12">
+                <div class="row">
+                    @foreach (var room in rooms)
+                    {
+                        <div class="col-md-4">
+                            <div class="d-flex gap-2">
+                                <div class="media-body w-100">
+                                    <h5>@room</h5>
+                                    <p>&nbsp;</p>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+                @foreach (var sessionsSlot in sessionsSlots)
+                {
+                    <div class="row">
+                        <h4 class="media-heading">@sessionsSlot.Key.ToString("HH:mm")</h4>
+                        @foreach (var session in sessionsSlot)
+                        {
+                            <div class="col-md-4">
+                                <div class="d-flex gap-2">
+                                    <div class="media-body w-100">
+                                        @if (!string.IsNullOrWhiteSpace(session.Title))
+                                        {
+                                            <h5>@session.Title</h5>
+                                            <h6><SessionSpeakers Session="@session" Speakers="@speakers"></SessionSpeakers></h6>
+                                            <p>@SessionDescriptionOf(session)</p>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End: Schedule -->
+<div class="container speaker">
+    <!-- Start: Speakers -->
+    <div class="row me-row content-ct" id="speakers">
+        <h2 class="row-title">Speakers</h2>
+        @foreach (var speaker in speakers.OrderBy(xx => Random.Shared.Next()))
+        {
+            <div class="col-md-3 col-sm-3 mb-3">
+                <img src="@speaker.ProfilePicture" class="speaker-img">
+                <h3><a href="@speaker.SpeakerUrl()" target="_blank">@speaker.FirstName @speaker.LastName</a></h3>
+            </div>
+        }
+    </div>
+    <!-- End: Speakers -->
+</div>
+
+<!-- Start: Footer -->
+<div class="container-fluid footer">
+    <div class="row footer-credit">
+        <div class="col-md-6 col-sm-6">
+            <p>&copy; 2007-@(DateTimeOffset.Now.Year), <a href="http://www.1nn0va.it">1nn0va.it</a> | Design by <a href="">Nicola Paro</a> | All rights reserved.</p>
+        </div>
+    </div>
+</div>
+
+@code {
+    HttpClient httpClient = new();
+
+    SpeakerInfo[] speakers = [];
+
+    IGrouping<DateTimeOffset, Session>[] sessionsSlots = [];
+
+    string[] rooms = [];
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            try
+            {
+                speakers = await httpClient.GetFromJsonAsync<SpeakerInfo[]>("https://sessionize.com/api/v2/h4qpyonh/view/Speakers");
+
+                var sessionsRaw = await httpClient.GetFromJsonAsync<RoomDescription[]>("https://sessionize.com/api/v2/h4qpyonh/view/GridSmart");
+
+                rooms = sessionsRaw[0].Rooms.Select(xx => xx.Name).Distinct().ToArray();
+
+                sessionsSlots = sessionsRaw[0].Rooms.SelectMany(xx => xx.Sessions).GroupBy(xx => xx.StartsAt).ToArray();
+
+            }
+            catch (Exception ex)
+            {
+            }
+            StateHasChanged();
+        }
+    }
+
+    MarkupString SessionDescriptionOf(Session sessionInfo)
+    {
+        if (string.IsNullOrWhiteSpace(sessionInfo.Description)) return (MarkupString)"&nbsp;";
+        return new MarkupString(sessionInfo.Description);
+    }
+
+    Session[] Complete(IEnumerable<Session> group)
+    {
+        return rooms.Select(xx =>
+        {
+            var session = group.SingleOrDefault(yy => yy.Room == xx);
+            if (session is not null) return session;
+            return new Session
+                {
+                    Room = xx
+                };
+        }).ToArray();
+    }
+}
